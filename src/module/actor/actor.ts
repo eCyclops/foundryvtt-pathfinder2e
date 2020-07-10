@@ -21,6 +21,8 @@ import { getArmorBonus, getAttackBonus, getResiliencyBonus } from '../item/runes
 import { TraitSelector5e } from '../system/trait-selector';
 import { DicePF2e } from '../../scripts/dice'
 import PF2EItem from '../item/item';
+import { SpellcastingEntryData, ArmorData } from '../item/dataDefinitions';
+import { CustomModifier } from './actorDataDefinitions';
 
 export const SKILL_DICTIONARY = Object.freeze({
   acr: 'acrobatics',
@@ -66,27 +68,26 @@ export default class PF2EActor extends Actor {
 
     // Get the Actor's data object
     const actorData = this.data;
-    const { data } = actorData;
     this._prepareTokenImg();
 
     // Ability modifiers
     if (actorData.type === 'npc') {
-      for (const abl of Object.values(data.abilities as Record<any, any>)) {
+      for (const abl of Object.values(actorData.data.abilities as Record<any, any>)) {
         if (!abl.mod) abl.mod = 0;
         abl.value = abl.mod * 2 + 10;
       }
     } else if (actorData.type == 'character') {
-      for (const abl of Object.values(data.abilities as Record<any, any>)) {
+      for (const abl of Object.values(actorData.data.abilities as Record<any, any>)) {
         abl.mod = Math.floor((abl.value - 10) / 2);
       }
     }
 
     // Prepare Character data
     if (actorData.type === 'character') this._prepareCharacterData(actorData);
-    else if (actorData.type === 'npc') this._prepareNPCData(data);
+    else if (actorData.type === 'npc') this._prepareNPCData(actorData.data);
 
 
-    if (data.traits !== undefined) {
+    if ('traits' in actorData.data) {
       // TODO: Migrate trait storage format
       const map = {
         dr: CONFIG.PF2E.damageTypes,
@@ -96,7 +97,7 @@ export default class PF2EActor extends Actor {
         languages: CONFIG.PF2E.languages,
       };
       for (const [t, choices] of Object.entries(map)) {
-        const trait = data.traits[t];
+        const trait = actorData.data.traits[t];
         if (trait == undefined) continue;
         if (!(trait.value instanceof Array)) {
           trait.value = TraitSelector5e._backCompat(trait.value, choices);
@@ -578,9 +579,9 @@ export default class PF2EActor extends Actor {
     }
 
     getFirstWornArmor() {
-        return this.data.items.filter((item) => item.type === 'armor')
-            .filter((armor) => armor.data.armorType.value !== 'shield')
-            .find((armor) => armor.data.equipped.value);
+        return this.data.items.filter((item): item is ArmorData => item.type === 'armor')
+          .filter((armor) => armor.data.armorType.value !== 'shield')
+          .find((armor) => armor.data.equipped.value);
     }
 
     static traits(source) {
@@ -637,6 +638,8 @@ export default class PF2EActor extends Actor {
    * @param skill {String}    The skill id
    */
   rollSkill(event, skillName) {
+    if (!(this.data.type == 'character' || this.data.type == 'npc')) throw new Error('tried to roll skill check for invalid actor');
+
     const skl = this.data.data.skills[skillName];
     const rank = CONFIG.PF2E.proficiencyLevels[skl.rank];
     const parts = ['@mod', '@itemBonus'];
@@ -661,6 +664,8 @@ export default class PF2EActor extends Actor {
    * @param skill {String}    The skill id
    */
   rollRecovery(event) {
+    if (this.data.type != 'character') throw new Error('tried to roll recovery for invalid actor');
+
     const dying = this.data.data.attributes.dying.value;
     // const wounded = this.data.data.attributes.wounded.value; // not needed currently as the result is currently not automated
     const recoveryMod = getProperty(this.data.data.attributes, 'dying.recoveryMod') || 0;
@@ -710,6 +715,8 @@ export default class PF2EActor extends Actor {
    * @param skill {String}    The skill id
    */
   rollLoreSkill(event, item) {
+    if (!(this.data.type == 'character' || this.data.type == 'npc')) throw new Error('tried to roll lore skill for invalid actor');
+
     const parts = ['@mod', '@itemBonus'];
     const flavor = `${item.name} Skill Check`;
     const i = item.data;
@@ -744,6 +751,8 @@ export default class PF2EActor extends Actor {
    * @param skill {String}    The skill id
    */
   rollSave(event, saveName) {
+    if (!(this.data.type == 'character' || this.data.type == 'npc' || this.data.type == 'hazard')) throw new Error('tried to roll save for invalid actor');
+
     const save = this.data.data.saves[saveName];
     const parts = ['@mod', '@itemBonus'];
     const flavor = `${CONFIG.PF2E.saves[saveName]} Save Check`;
@@ -767,6 +776,8 @@ export default class PF2EActor extends Actor {
    * @param skill {String}    The skill id
    */
   rollAbility(event, abilityName) {
+    if (!(this.data.type == 'character' || this.data.type == 'npc')) throw new Error('tried to roll ability for invalid actor');
+
     const skl = this.data.data.abilities[abilityName];
     const parts = ['@mod'];
     const flavor = `${CONFIG.PF2E.abilities[abilityName]} Check`;
@@ -789,6 +800,8 @@ export default class PF2EActor extends Actor {
    * @param skill {String}    The skill id
    */
   rollAttribute(event, attributeName) {
+    if (!(this.data.type == 'character' || this.data.type == 'npc' || this.data.type == 'hazard')) throw new Error('tried to roll attribute for invalid actor');
+
     const skl = this.data.data.attributes[attributeName];
     const parts = ['@mod', '@itemBonus'];
     const flavor = `${CONFIG.PF2E.attributes[attributeName]} Check`;
@@ -995,8 +1008,9 @@ export default class PF2EActor extends Actor {
    * @return {Promise}
    */
   async modifyTokenAttribute(attribute, value, isDelta=false, isBar=true) {
-    const {hp} = this.data.data.attributes;
-    const {sp} = this.data.data.attributes;
+    if (!(this.data.type == 'character' || this.data.type == 'npc')) throw new Error('tried to modify token attribute for invalid actor');
+
+    const {hp, sp} = this.data.data.attributes;
 
     if ( attribute === 'attributes.shield') {
       const {shield} = this.data.data.attributes;
@@ -1062,6 +1076,8 @@ export default class PF2EActor extends Actor {
    * @param {string} damageType
    */
   async addCustomModifier(stat, name, value, type, predicate?, damageType?) {
+    if (!(this.data.type == 'character')) throw new Error('tried to add custom modifier for invalid actor');
+
     const customModifiers = duplicate(this.data.data.customModifiers ?? {});
     if (!(customModifiers[stat] ?? []).find((m) => m.name === name)) {
       const modifier = new PF2Modifier(name, value, type);
@@ -1089,6 +1105,8 @@ export default class PF2EActor extends Actor {
    * @param {string|number} modifier name or index of the modifier to remove
    */
   async removeCustomModifier(stat, modifier) {
+    if (!(this.data.type == 'character')) throw new Error('tried to add custom modifier for invalid actor');
+
     const customModifiers = duplicate(this.data.data.customModifiers ?? {});
     if (typeof modifier === 'number' && customModifiers[stat] && customModifiers[stat].length > modifier) {
       const statModifiers = customModifiers[stat];
@@ -1105,6 +1123,7 @@ export default class PF2EActor extends Actor {
     if (!param.name) {
       throw new Error('name for damage dice is mandatory');
     }
+    if (!(this.data.type == 'character')) throw new Error('tried to add custom modifier for invalid actor');
     param.selector = param?.selector ?? 'damage';
     const damageDice = duplicate(this.data.data.damageDice ?? {});
     if (!(damageDice[param.selector] ?? []).find((d) => d.name === param.name)) {
@@ -1122,6 +1141,7 @@ export default class PF2EActor extends Actor {
    * @param {string|number} dice name or index of the damage dice to remove
    */
   async removeDamageDice(selector, dice) {
+    if (!(this.data.type == 'character')) throw new Error('tried to add custom modifier for invalid actor');
     const damageDice = duplicate(this.data.data.damageDice ?? {});
     if (typeof dice === 'number' && damageDice[selector] && damageDice[selector].length > dice) {
       const diceModifiers = damageDice[dice];

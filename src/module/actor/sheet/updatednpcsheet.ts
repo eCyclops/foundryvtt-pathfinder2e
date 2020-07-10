@@ -170,7 +170,7 @@ class UpdatedNPCActorPF2ESheet extends ActorSheetPF2eNPC {
    * Increases the NPC via the Elite/Weak adjustment rules
    */
   npcAdjustment(increase) {
-    let actorData = duplicate(this.actor.data);
+    let actorData : any = duplicate(this.actor.data);
     const tokenData = (this.token !== null) ? duplicate(this.token.data) : duplicate(this.actor.data.token);
     let traits = getProperty(actorData.data, 'traits.traits.value') || [];
     let traitsAdjusted = false;

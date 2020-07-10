@@ -107,6 +107,7 @@ export default class PF2EItem extends Item {
   _weaponChatData() {
     const data : any = duplicate(this.data.data);
     const actorData = this.actor.data;
+    if (actorData.type !== 'character' && actorData.type !== 'npc') throw new Error('tried to get weapon data for wrong actor type');
     const traits = [];
     const itemTraits = data.traits.value;
     let versatileTrait = false;
@@ -158,7 +159,7 @@ export default class PF2EItem extends Item {
         if (martialSkill.data.type === 'martial') {
           proficiency.type = "skill";
           const rank = martialSkill.data.data.proficient?.value || 0;
-          proficiency.value = ProficiencyModifier.fromLevelAndRank(this.actor.data.data.details.level.value, rank).modifier;
+          proficiency.value = ProficiencyModifier.fromLevelAndRank(actorData.data.details.level.value, rank).modifier;
         }
       } catch (err) {
         console.log(`PF2E | Could not find martial skill for ${prof}`)
@@ -236,6 +237,7 @@ export default class PF2EItem extends Item {
 
   _toolChatData() {
     const data : any = duplicate(this.data.data);
+    if (this.actor.data.type !== 'character' && this.actor.data.type !== 'npc') throw new Error('tried to get tool data for wrong actor type');
     const abl = this.actor.data.data.abilities[data.ability.value].label;
     const prof = data.proficient.value || 0;
     const properties = [abl, CONFIG.PF2E.proficiencyLevels[prof]];
@@ -247,12 +249,11 @@ export default class PF2EItem extends Item {
 
   _loreChatData() {
     const data : any = duplicate(this.data.data);
-    if (this.actor.data.type != 'npc') {
-      const abl = this.actor.data.data.abilities[data.ability.value].label;
-      const prof = data.proficient.value || 0;
-      const properties = [abl, CONFIG.PF2E.proficiencyLevels[prof]];
-      data.properties = properties.filter((p) => p !== null);
-    }
+    if (this.actor.data.type !== 'character' && this.actor.data.type !== 'npc') throw new Error('tried to get lore data for wrong actor type');
+    const abl = this.actor.data.data.abilities[data.ability.value].label;
+    const prof = data.proficient.value || 0;
+    const properties = [abl, CONFIG.PF2E.proficiencyLevels[prof]];
+    data.properties = properties.filter((p) => p !== null);
     return data;
   }
 
@@ -424,7 +425,7 @@ export default class PF2EItem extends Item {
     // Prepare roll data
     // let itemData = this.data.data,
     const itemData = this.getChatData();
-    const rollData = duplicate(this.actor.data.data);
+    const rollData : any = duplicate(this.actor.data.data);
     const isFinesse = itemData.isFinesse;
     const abl = (isFinesse && rollData.abilities.dex.mod > rollData.abilities.str.mod ? 'dex' : (itemData.ability.value || 'str'));
     const prof = itemData.weaponType.value || 'simple';
@@ -480,7 +481,9 @@ export default class PF2EItem extends Item {
 
     // Get item and actor data and format it for the damage roll
     const itemData = this.data.data;
-    const rollData = duplicate(this.actor.data.data);
+    const actorData = this.actor.data;
+    if (actorData.type !== 'character' && actorData.type !== 'npc') throw new Error('Tried to roll weapon damage for a '+actorData.type);
+    const rollData : any = duplicate(actorData.data);
     let rollDie = itemData.damage.die;
     const abl = 'str';
     let abilityMod = rollData.abilities[abl].mod;
@@ -552,8 +555,8 @@ export default class PF2EItem extends Item {
       parts.push(abilityMod);
     } else { // else if a ranged attack
       if ((itemData.traits.value || []).includes('propulsive')) {
-        if (Math.sign(this.actor.data.data.abilities.str.mod) === 1) {
-          const halfStr = Math.floor(this.actor.data.data.abilities.str.mod / 2);
+        if (Math.sign(actorData.data.abilities.str.mod) === 1) {
+          const halfStr = Math.floor(actorData.data.abilities.str.mod / 2);
           parts.push(halfStr);
         }
       } else if (thrownTrait) {
@@ -611,7 +614,7 @@ export default class PF2EItem extends Item {
     // Prepare roll data
     // let itemData = this.data.data,
     const itemData = this.getChatData();
-    const rollData = duplicate(this.actor.data.data);
+    const rollData : any = duplicate(this.actor.data.data);
     let parts = ['@itemBonus'];
     const title = `${this.name} - Attack Roll${(multiAttackPenalty > 1) ? ` (MAP ${multiAttackPenalty})` : ''}`;
 
@@ -650,7 +653,7 @@ export default class PF2EItem extends Item {
 
     // Get item and actor data and format it for the damage roll
     const itemData = this.data.data;
-    const rollData = duplicate(this.actor.data.data);
+    const rollData : any = duplicate(this.actor.data.data);
     let parts = [];
     let partsType = [];
     const dtype = []; //CONFIG.PF2E.damageTypes[itemData.damage.damageType];
@@ -779,7 +782,7 @@ export default class PF2EItem extends Item {
 
     // Get data
     const itemData = this.data.data;
-    const rollData = duplicate(this.actor.data.data);
+    const rollData : any = duplicate(this.actor.data.data);
     const isHeal = itemData.spellType.value === 'heal';
     const dtype = CONFIG.PF2E.damageTypes[itemData.damageType.value];
 

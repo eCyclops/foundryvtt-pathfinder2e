@@ -496,6 +496,7 @@ abstract class ActorSheetPF2e extends ActorSheet {
     html.find('.save-name').click((ev) => {
       ev.preventDefault();
       const save = $(ev.currentTarget).parents('[data-save]')[0].getAttribute('data-save');
+      if (this.actor.data.type !== 'character' && this.actor.data.type !== 'npc' && this.actor.data.type !== 'hazard') throw new Error('tried to roll a save on the wrong actor type');
       if (this.actor.data.data.saves[save]?.roll) {
         const opts = this.actor.getRollOptions(['all', 'saving-throw', save]);
         this.actor.data.data.saves[save].roll(ev, opts);
@@ -507,14 +508,16 @@ abstract class ActorSheetPF2e extends ActorSheet {
     // Roll Attribute Checks
     html.find('.roll-init').click((ev) => {
       ev.preventDefault();
+      if (this.actor.data.type !== 'character' && this.actor.data.type !== 'npc') throw new Error('tried to roll initiative on the wrong actor type');
       const checkType = this.actor.data.data.attributes.initiative.ability;
       const opts = this.actor.getRollOptions(['all', 'initiative'].concat(SKILL_DICTIONARY[checkType] ?? checkType));
-      this.actor.data.data.attributes.initiative.roll(ev, opts);
+      (this.actor.data.data.attributes.initiative as any).roll(ev, opts);
     });
 
     html.find('.attribute-name').click((ev) => {
       ev.preventDefault();
       const attribute = ev.currentTarget.parentElement.getAttribute('data-attribute');
+      if (this.actor.data.type !== 'character' && this.actor.data.type !== 'npc') throw new Error('tried to roll attribute on the wrong actor type');
       if (this.actor.data.data.attributes[attribute]?.roll) {
         const opts = this.actor.getRollOptions(['all', attribute]);
         this.actor.data.data.attributes[attribute]?.roll(ev, opts);
@@ -533,9 +536,9 @@ abstract class ActorSheetPF2e extends ActorSheet {
     // Roll Skill Checks
     html.find('.skill-name.rollable').click((ev) => {
       const skl = ev.currentTarget.parentElement.getAttribute('data-skill');
-      if (this.actor.data.data.skills[skl]?.roll) {
+      if ((this.actor.data.data as any).skills[skl]?.roll) {
         const opts = this.actor.getRollOptions(['all', 'skill-check', SKILL_DICTIONARY[skl] ?? skl]);
-        this.actor.data.data.skills[skl].roll(ev, opts);
+        (this.actor.data.data as any).skills[skl].roll(ev, opts);
       } else {
         this.actor.rollSkill(ev, skl);
       }
@@ -721,14 +724,14 @@ abstract class ActorSheetPF2e extends ActorSheet {
     html.find('[data-action-index].item .item-image.action-strike').click((event) => {
       const actionIndex = $(event.currentTarget).parents('.item').attr('data-action-index');
       const opts = this.actor.getRollOptions(['all', 'attack-roll']);
-      this.actor.data.data.actions[Number(actionIndex)]?.roll(event, opts);
+      (this.actor.data.data as any).actions[Number(actionIndex)]?.roll(event, opts);
     });
 
     html.find('[data-variant-index].variant-strike').click((event) => {
       const actionIndex = $(event.currentTarget).parents('.item').attr('data-action-index');
       const variantIndex = $(event.currentTarget).attr('data-variant-index');
       const opts = this.actor.getRollOptions(['all', 'attack-roll']);
-      this.actor.data.data.actions[Number(actionIndex)]?.variants[Number(variantIndex)]?.roll(event, opts);
+      (this.actor.data.data as any).actions[Number(actionIndex)]?.variants[Number(variantIndex)]?.roll(event, opts);
     });
 
     // Item Rolling

@@ -357,6 +357,7 @@ export class PF2eStatusEffects {
      */
     static _updateTokenDataWithActorEffects(tokenData) {
         const actor = game.actors.get(tokenData.actorId);
+        if (actor.data.type !== 'character' && actor.data.type !== 'npc' && actor.data.type !== 'hazard') return;
         const statusEffects = actor.data.data.statusEffects;
         const update = duplicate(tokenData);
         if (statusEffects !== undefined) {
