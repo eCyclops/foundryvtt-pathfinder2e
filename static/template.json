@@ -1011,6 +1011,15 @@
 	  "spellCategory": {
         "value": ""
       },
+      "spellSlotLevel": {
+        "value": null
+      },
+      "isSignatureSpell": {
+        "value": false
+      },
+      "isAutoLeveled": {
+        "value": false
+      },
       "traditions": {
         "value": []
       },

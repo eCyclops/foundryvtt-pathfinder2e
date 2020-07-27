@@ -101,3 +101,16 @@ export function addSign(number: number): string {
     }
     return '0';
 }
+
+/**
+ * Creates an array filled with numbers from fromExclusive to < toExclusive
+ * @param fromInclusive
+ * @param toExclusive
+ */
+export function createRange(fromInclusive: number, toExclusive: number): number[] {
+    const result = [];
+    for (let i = fromInclusive; i < toExclusive; i += 1) {
+        result.push(i);
+    }
+    return result;
+}
