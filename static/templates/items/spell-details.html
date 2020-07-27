@@ -10,6 +10,22 @@
 </div>
 
 <div class="form-group">
+  <label>{{localize "PF2E.SpellSlotLevelLabel"}}</label>
+  <select name="data.spellSlotLevel.value" data-dtype="Number">
+    {{#select data.spellSlotLevel.value}}
+    {{#each spellLevels as |name lvl|}}
+    <option value="{{lvl}}">{{name}}</option>
+    {{/each}}
+    {{/select}}
+  </select>
+</div>
+
+<div class="form-group">
+  <label>{{localize "PF2E.SpellAutoLeveledLabel"}}</label>
+  <input type="checkbox" name="data.isAutoLeveled.value" data-dtype="Boolean" {{checked data.isAutoLeveled.value}}/>
+</div>
+
+<div class="form-group">
     <label>{{localize "PF2E.SpellTypeLabel"}}</label>
     <select name="data.spellType.value" data-dtype="{{data.spellType.type}}">
         {{#select data.spellType.value}}

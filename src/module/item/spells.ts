@@ -3,14 +3,10 @@ import {createRange, toNumber} from '../utils';
 type ItemDataPlaceholder = any;
 type ActorEntityPlaceholder = any;
 
-export function getSignatureSpellCopies(items: ItemDataPlaceholder[], spellName: string): Array<Record<string, string>> {
+export function getSignatureSpellCopies(items: ItemDataPlaceholder[], spellName: string): string[] {
     return items
         .filter(item => item.type === 'spell' && item.data?.isAutoLeveled?.value === true && item.name === spellName)
-        .map(item => {
-            return {
-                _id: item._id,
-            };
-        });
+        .map(item => item._id);
 }
 
 export function createSignatureSpellCopies(items: ItemDataPlaceholder[], spellName: string, spellData: ItemDataPlaceholder): ItemDataPlaceholder {
@@ -22,7 +18,7 @@ export function createSignatureSpellCopies(items: ItemDataPlaceholder[], spellNa
             .filter(level => level !== undefined),
     );
     const originalSpellLevel = spellData.data?.level?.value ?? 1;
-    const spellSlotLevel = spellData.data?.spellSlotLevel?.value ?? 1;
+    const spellSlotLevel = spellData.data?.spellSlotLevel?.value ?? originalSpellLevel;
     return createRange(originalSpellLevel, 11)
         .filter(level => !spellExistsAtLevels.has(level) && level !== spellSlotLevel)
         .map(level => {
@@ -47,14 +43,16 @@ export async function toggleSignatureSpell(actor: ActorEntityPlaceholder, spellI
     if (spell.data.data?.isSignatureSpell?.value === true) {
         const copies = getSignatureSpellCopies(actor.data.items, spell.name);
         await actor.deleteEmbeddedEntity('OwnedItem', copies);
-        await spell.update({
-            'data.level.isSignatureSpell': false,
+        await actor.updateEmbeddedEntity('OwnedItem', {
+            _id: spell._id,
+            'data.isSignatureSpell.value': false,
         });
     } else {
         const copies = createSignatureSpellCopies(actor.data.items, spell.name, spell.data);
         await actor.createEmbeddedEntity('OwnedItem', copies);
-        await spell.update({
-            'data.level.isSignatureSpell': true,
+        await actor.updateEmbeddedEntity('OwnedItem', {
+            _id: spell._id,
+            'data.isSignatureSpell.value': true,
         });
     }
 }

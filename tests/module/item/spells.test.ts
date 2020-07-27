@@ -46,7 +46,7 @@ describe('Signature Spells', () => {
         ];
         const copies = getSignatureSpellCopies(spells, 'ray of frost');
         expect(copies.length).toBe(1);
-        expect(copies[0]._id).toBe('autoleveled');
+        expect(copies[0]).toBe('autoleveled');
     });
 
     test('should create signature spells', () => {
