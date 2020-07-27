@@ -116,7 +116,8 @@ abstract class ActorSheetPF2e extends ActorSheet {
    * @private
    */
   _prepareSpell(actorData, spellbook, spell) {
-    const spellLvl = (Number(spell.data.level.value) < 11) ? Number(spell.data.level.value) : 10;
+      const level = spell.data.spellSlotLevel?.value ?? spell.data.level.value;
+    const spellLvl = (Number(level) < 11) ? Number(level) : 10;
     const isNPC = this.actorType === 'npc';
     let spellcastingEntry : any = null;
 
