@@ -3,8 +3,7 @@ import {createRange, toNumber} from '../utils';
 type ItemDataPlaceholder = any;
 type ActorEntityPlaceholder = any;
 
-async function getSignatureSpellCopies(items: ItemDataPlaceholder[], spellName: string) {
-    console.log(items);
+export function getSignatureSpellCopies(items: ItemDataPlaceholder[], spellName: string): Array<Record<string, string>> {
     return items
         .filter(item => item.type === 'spell' && item.data?.isAutoLeveled?.value === true && item.name === spellName)
         .map(item => {
@@ -14,22 +13,26 @@ async function getSignatureSpellCopies(items: ItemDataPlaceholder[], spellName: 
         });
 }
 
-async function createSignatureSpellCopies(items: any[], spellName: string, spellData: ItemDataPlaceholder) {
-    console.log(items);
+export function createSignatureSpellCopies(items: ItemDataPlaceholder[], spellName: string, spellData: ItemDataPlaceholder): ItemDataPlaceholder {
     const spellExistsAtLevels = new Set(
         items
             .filter(item => item.type === 'spell' && item.name === spellName)
-            .map(item => item.data?.level?.value)
+            .map(item => item.data?.spellSlotLevel?.value)
             .map(toNumber)
-            .filter(level => level === undefined),
+            .filter(level => level !== undefined),
     );
-    const originalSpellLevel = spellData?.level?.value ?? 1;
-    return createRange(originalSpellLevel + 1, 11)
-        .filter(level => !spellExistsAtLevels.has(level))
+    const originalSpellLevel = spellData.data?.level?.value ?? 1;
+    const spellSlotLevel = spellData.data?.spellSlotLevel?.value ?? 1;
+    return createRange(originalSpellLevel, 11)
+        .filter(level => !spellExistsAtLevels.has(level) && level !== spellSlotLevel)
         .map(level => {
-            const duplicateSpell = duplicate(spellData);
-            duplicateSpell.data.isAutoLeveled.value = true;
-            duplicateSpell.data.spellSlotLevel.value = level;
+            const duplicateSpell = JSON.parse(JSON.stringify(spellData));
+            duplicateSpell.data.isAutoLeveled = {
+                value: true  
+            };
+            duplicateSpell.data.spellSlotLevel = {
+                value: level
+            };
             return duplicateSpell;
         });
 }
@@ -40,16 +43,15 @@ async function createSignatureSpellCopies(items: any[], spellName: string, spell
  * @param spellItemId
  */
 export async function toggleSignatureSpell(actor: ActorEntityPlaceholder, spellItemId: string): Promise<void> {
-    console.log(actor);
     const spell = actor.getOwnedItem(spellItemId);
     if (spell.data.data?.isSignatureSpell?.value === true) {
-        const copies = getSignatureSpellCopies(actor, spell.name);
+        const copies = getSignatureSpellCopies(actor.data.items, spell.name);
         await actor.deleteEmbeddedEntity('OwnedItem', copies);
         await spell.update({
             'data.level.isSignatureSpell': false,
         });
     } else {
-        const copies = createSignatureSpellCopies(actor, spell.data, spell.name);
+        const copies = createSignatureSpellCopies(actor.data.items, spell.name, spell.data);
         await actor.createEmbeddedEntity('OwnedItem', copies);
         await spell.update({
             'data.level.isSignatureSpell': true,

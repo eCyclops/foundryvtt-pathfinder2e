@@ -3,6 +3,7 @@ import { calculateBulk, itemsFromActorData, stacks, formatBulk, indexBulkItemsBy
 import { calculateEncumbrance } from '../../item/encumbrance';
 import { getContainerMap } from '../../item/container';
 import { ProficiencyModifier } from '../../modifiers';
+import {toggleSignatureSpell} from '../../item/spells';
 
 class ActorSheetPF2eCharacter extends ActorSheetPF2eCreature {
   static get defaultOptions() {
@@ -248,6 +249,7 @@ class ActorSheetPF2eCharacter extends ActorSheetPF2eCreature {
         i.data.spelldc.hover = CONFIG.PF2E.proficiencyLevels[i.data.proficiency.value];
         i.data.tradition.title = CONFIG.PF2E.magicTraditions[i.data.tradition.value];
         i.data.prepared.title = CONFIG.PF2E.preparationType[i.data.prepared.value];
+        i.data.isSpontaneous = i.data.prepared.value === 'spontaneous'; 
         // Check if prepared spellcasting type and set Boolean
         if ((i.data.prepared || {}).value === 'prepared') i.data.prepared.preparedSpells = true;
         else i.data.prepared.preparedSpells = false;
@@ -259,7 +261,6 @@ class ActorSheetPF2eCharacter extends ActorSheetPF2eCreature {
           if (i.data.focus == undefined) i.data.focus = { points: 1, pool: 1};
           i.data.focus.icon = this._getFocusIcon(i.data.focus);
         } else i.data.tradition.focus = false;
-
         spellcastingEntries.push(i);
       }
 
@@ -507,6 +508,7 @@ class ActorSheetPF2eCharacter extends ActorSheetPF2eCreature {
     // listener added because Line 14700 of foundry.js has a bug
     // it only looks for data-edit="img"
     html.find('img[data-edit]').click(ev => this._onEditImage(ev));
+    html.find('.item-toggle-signature-spell').click(ev => this._toggleSignatureSpell(ev));
   }
 
   /**
@@ -530,6 +532,11 @@ class ActorSheetPF2eCharacter extends ActorSheetPF2eCreature {
     return icons[focus.points];
   }
 
+    async _toggleSignatureSpell(event) {
+      const target = $(event.target).closest('.item');
+      const {itemId} = target[0].dataset;
+      await toggleSignatureSpell(this.actor, itemId)
+    }
 }
 
 export default ActorSheetPF2eCharacter;
