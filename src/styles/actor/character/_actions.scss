@@ -3,28 +3,33 @@
 
     .actions-nav {
         display: flex;
+        position: fixed;
+        flex-wrap: nowrap;
         justify-content: center;
         align-items: flex-start;
         list-style: none;
         @include p-reset;
-        margin-left: 8px;
-        margin-bottom: 1rem;
 
         li {
             background-color: var(--alt);
-            padding: 0.25rem 1.5rem;
+            border-right: 1px solid darken($alt-color, 10);
+            border-left: 1px solid lighten($alt-color, 10);
             
             a {
+                display: block;
+                padding: 0.25rem 2rem;
                 color: white;
                 text-decoration: none;
             }
 
             &:first-child {
                 border-radius: 0 0 0 3px;
+                border-left: none;
             }
 
             &:last-child {
                 border-radius: 0 0 3px 0;
+                border-right: none;
             }
 
             &.active {
@@ -32,7 +37,23 @@
             }
         }
     }
+
+    .actions-container {
+        margin-top: 2.5rem;
+
+        .actions-options {
+            display: flex;
+            justify-content: space-evenly;
+
+            .actions-option {
+                display: flex;
+                align-items: center;
+            }
+        }
+    }
+
     .actions-list {
+        margin-top: 1rem;
         .item {
             display: flex;
             flex-wrap: wrap;
@@ -48,10 +69,8 @@
             }
 
             .item-name {
-                display: flex;
-                align-items: center;
+                @include flex-center;
                 cursor: pointer;
-                flex: 0 50%;
 
                 .item-image {
                     height: 22px;
@@ -191,11 +210,8 @@
 
             .button-group {
                 display: flex;
-                justify-content: flex-end;
                 align-items: center;
                 flex-wrap: nowrap;
-                width: 50%;
-                flex: 0;
                 button {
                     margin: 0;
                     border: none;
@@ -215,6 +231,10 @@
                     &:hover {
                         box-shadow: none;
                         text-shadow: 0 0 2px white;
+                    }
+
+                    &:first-child {
+                        margin-left: 0;
                     }
                 }
             }
