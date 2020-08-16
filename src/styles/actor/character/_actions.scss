@@ -142,6 +142,29 @@
                 flex-basis: 100%;
                 margin-bottom: 8px;
 
+                .item-mods {
+                    display: flex;
+                    align-items: center;
+                    padding: 0.5rem 0;
+                    border-bottom: 1px solid var(--sub);
+
+                    .item-mods-checkboxes {
+                        display: flex;
+                        margin-top: 2px;
+                        @include p-reset;
+                        li {
+                            display: flex;
+                            align-items: center;
+                            margin-top: 2px;
+
+                            input[type="checkbox"] {
+                                margin-right: 0;
+                                margin-left: 6px;
+                            }
+                        }
+                    }
+                }
+
                 .title,
                 .framing {
                     color: var(--primary);
