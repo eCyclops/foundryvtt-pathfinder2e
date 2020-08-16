@@ -1,4 +1,37 @@
 .actions {
+    padding-top: 0 !important;
+
+    .actions-nav {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        list-style: none;
+        @include p-reset;
+        margin-left: 8px;
+        margin-bottom: 1rem;
+
+        li {
+            background-color: var(--alt);
+            padding: 0.25rem 1.5rem;
+            
+            a {
+                color: white;
+                text-decoration: none;
+            }
+
+            &:first-child {
+                border-radius: 0 0 0 3px;
+            }
+
+            &:last-child {
+                border-radius: 0 0 3px 0;
+            }
+
+            &.active {
+                background-color: var(--primary);
+            }
+        }
+    }
     .actions-list {
         .item {
             display: flex;
