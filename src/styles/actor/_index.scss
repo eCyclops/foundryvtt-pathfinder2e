@@ -1,4 +1,4 @@
-$header-height: 89px;
+$header-height: 114px;
 
 .crb-style.actor .window-content {
     background: url('../assets/sheet/header.png'), url('../assets/sheet-bg.jpg');
@@ -15,8 +15,8 @@ $header-height: 89px;
 .crb-style form {
     display: grid;
     grid:
+        'nav nav' minmax(min-content, max-content)
         'sidebar header' 75px
-        'sidebar nav' minmax(min-content, max-content)
         'sidebar content' 1fr
         / 247px 1fr;
 
@@ -34,7 +34,7 @@ $header-height: 89px;
     }
     .sheet-navigation {
         grid-area: nav;
-        margin-right: $window-p-right;
+        margin-left: 13rem;
     }
     .sheet-body {
         grid-area: content;
@@ -49,7 +49,6 @@ $header-height: 89px;
             display: flex;
             flex-direction: column;
             width: 100%;
-            padding-top: 12px;
 
             & > .tab:not(.inventory),
             .inventory .inventory-list {
@@ -67,8 +66,9 @@ $header-height: 89px;
                 );
             }
 
-            &.tab[data-tab] {
+            & > .tab[data-tab] {
                 display: none;
+                padding-top: 12px;
                 &.active {
                     display: initial;
                 }

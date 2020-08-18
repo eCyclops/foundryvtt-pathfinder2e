@@ -1,33 +1,58 @@
 nav.sheet-navigation {
-    display: inline-flex;
-    justify-content: space-evenly;
-    align-items: center;
     background: var(--secondary);
     background: url('../assets/sheet/border-pattern.png') repeat-x top,
         url('../assets/sheet/border-pattern.png') repeat-x bottom,
         var(--secondary);
     @include corner-boxes;
+    position: relative;
+    overflow: hidden;
+    height: 40px;
 
-    a {
-        color: $sidebar-label;
-        padding: 4px;
-        font-family: $sans-serif;
-        font-size: 12px;
-        position: relative;
-        span {
-            display: none;
-            margin-left: 3px;
+    .nav-items {
+        @include p-reset;
+        height:  calc(100% * 21);
+        width: 40px;
+        transform: rotate(-90deg) translateY(-30px);
+        transform-origin: right top;
+        overflow: hidden auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        &::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
         }
 
-        &.active {
-            span {
-                display: inline-flex;
+
+        li {
+            display: flex;
+            justify-content: center;
+            transform: rotate(90deg);
+            transform-origin: right top;
+            padding: 2rem;
+            margin-left: 0.45rem;
+
+            &:first-child {
+                margin-top: 21rem;
             }
         }
 
-        &:hover {
-            span {
-                display: inline-flex;
+        a {
+            display: inline-flex;
+            color: $sidebar-label;
+            padding: 4px;
+            font-family: $sans-serif;
+            font-size: 12px;
+
+            &.active {
+                color: white;
+            }
+
+            .fas {
+                margin-right: 4px;
             }
         }
     }
