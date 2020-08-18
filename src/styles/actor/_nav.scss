@@ -10,7 +10,7 @@ nav.sheet-navigation {
 
     .nav-items {
         @include p-reset;
-        height:  calc(100% * 21);
+        height:  calc(100% * 18);
         width: 40px;
         transform: rotate(-90deg) translateY(-30px);
         transform-origin: right top;
@@ -36,7 +36,7 @@ nav.sheet-navigation {
             margin-left: 0.45rem;
 
             &:first-child {
-                margin-top: 21rem;
+                margin-top: 22rem;
             }
         }
 
