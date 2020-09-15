@@ -84,7 +84,7 @@
     "ArmorArmorTypeLabel": "Armor Type",
     "ArmorCheckLabel": "Check Penalty",
     "ArmorCheckPenalty": "Armor Check Penalty",
-    "ArmorClassBase": "Base AC 10",
+    "ArmorClassBase": "Base Armor Class 10",
     "ArmorClassLabel": "Armor Class",
     "ArmorClassShortLabel": "AC",
     "ArmorDexLabel": "Dex Modifier Cap",
@@ -319,6 +319,7 @@
     "CritSuccess": "<strong>Critical Success</strong>",
     "CriticalDamageLabel": "Critical",
     "CriticalHitCardButtonTitle": "Draw a Critical Hit Card",
+    "CriticalFumbleCardButtonTitle": "Draw a Critical Fumble Card",
     "CurrencyCP": "Copper",
     "CurrencyGP": "Gold",
     "CurrencyPP": "Platinum",
@@ -581,6 +582,13 @@
     "MartialSkillsHeader": "Martial Proficiency",
     "MartialUnarmed": "Unarmed",
     "MartialUnarmored": "Unarmored",
+    "MasterArmorClass": "Master Armor Class {base}",
+    "MasterLevelHP": "Master Level",
+    "MasterSavingThrow": {
+      "fortitude": "Master Fortitude",
+      "reflex": "Master Reflex",
+      "will": "Master Will"
+    },
     "MaxHPTitle": "Your maximum hit points. This field is automatically calculated.",
     "MaxHPTitleNPC": "Maximum hit points.",
     "MaxHitPointsShortLabel": "Max HP",
@@ -721,14 +729,22 @@
     "RollBonusPlaceholder": "e.g. +3 or +1d4",
     "RollModeLabel": "Roll Mode",
     "RuleElement": {
+      "DamageDice": "Damage Dice",
+      "DexterityModifierCap": "Dexterity Modifier Cap",
       "FlatModifier": "Flat Modifier",
+      "FixedProficiency": "Fixed Proficiency",
       "TempHP": "Temporary Hit Points",
+      "ToggleProperty": "Toggle Property",
       "Unrecognized": "Unrecognized Rule Element"
     },
     "SETTINGS": {
       "critFumbleCards": {
         "hint": "Automatically draw a critical hit or fumble card on appropriate rolls.",
         "name": "Critical Hit and Fumble Cards"
+      },
+      "critFumbleCardButtons": {
+        "hint": "Show critical hit and fumble card draw buttons on attack rolls.",
+        "name": "Critical Hit and Fumble Card Buttons"
       },
       "statusEffectKeepFoundry": {
         "hint": "Determines if you want to show the Foundry Icon set below the Pathfinder 2E icon set. This will trigger a reload.",
@@ -829,11 +845,14 @@
     "SpecialSensesLabel": "Special Senses",
     "SpecialSensesTitle": "Your characters special senses.",
     "Speed": "Speed",
+    "SpeedBaseLabel": "Base {type} Speed",
+    "SpeedLabel": "{type} Speed",
     "SpeedTitle": "Your characters speed",
     "SpeedTypes": "Speed Types",
     "SpeedTypesBurrow": "Burrow",
     "SpeedTypesClimb": "Climb",
     "SpeedTypesFly": "Fly",
+    "SpeedTypesLand": "Land",
     "SpeedTypesSwim": "Swim",
     "SpeedTypesTitle": "Alternative movement types",
     "SpellAbilityLabel": "Spell Ability",
@@ -961,6 +980,9 @@
     "StrikingRuneLabel": "Striking Rune",
     "Success": "<strong>Success</strong>",
     "TabActionsLabel": "Actions",
+    "TabActionsDowntimeLabel": "Downtime",
+    "TabActionsEncounterLabel": "Encounter",
+    "TabActionsExplorationLabel": "Exploration",
     "TabCharacterLabel": "Character",
     "TabEffectsLabel": "Effects",
     "TabFeatsLabel": "Feats",
@@ -968,6 +990,7 @@
     "TabPathfinderSociety": "Pathfinder Society",
     "TabSkillsLabel": "Skills",
     "TabSpellbookLabel": "Spellbook",
+    "TargetFlatFootedLabel": "Target is flat-footed",
     "TempHPTitle": "The amount of temporary hit points you have",
     "TempHitPointsShortLabel": "Temp HP",
     "ToggleSpellVisibilityLevelTitle": "Toggle a chapter of your Spellbook",
@@ -1365,6 +1388,7 @@
     "TraitMerfolk": "merfolk",
     "TraitMetamagic": "Metamagic",
     "TraitMindless": "mindless",
+    "TraitMinion": "Minion",
     "TraitMisfortune": "Misfortune",
     "TraitModular": "Modular B, P, or S",
     "TraitMonitor": "monitor",
@@ -1559,6 +1583,7 @@
       "shiftModifyDamageLabel": "Modifier:",
       "shiftModifyDamageTitle": "Modify the rolled damage/healing"
     },
+    "UnitPriceLabel": "Unit price",
     "UnprepareItemTitle": "Unprepare Item",
     "UnpreparedSpellsLabel": "Preparation Shortlist",
     "UnpreparedSpellsLabelArcanePrepared": "Arcane Spellbook",

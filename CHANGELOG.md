@@ -1,5 +1,66 @@
 # Patch Notes:
 
+## Version 1.10.10
+### New Features
+* (@nikolaj-a) Damage dice rule element
+
+### Bug Fixes
+* (@In3luki) Fix card button click expanding roll details
+* (@In3luki) Fix fumble button drawing from crit table
+* (@In3luki) Fix initiative button on skill rolls and remove references to roll.parts
+
+### Content Changes
+* (@Shandyan) Adding effects and cross-links to alchemical items
+* (@nikolaj-a) Add damage dice rule element to the rogue Sneak Attack class feature
+
+### Core System Improvements
+* (@In3luki) Critical Hit and Fumble Cards improvements
+    * Add context flag to all d20 rolls and use context.type in all hooks
+    * Add context to roll flags and move flag creation inside roll.toMessage()
+
+
+## Version 1.10.9
+### New Features
+* (@abrault) Add rule element for Temporary Hit Points
+* (@abrault) Add rule element for Fixed Proficiency
+* (@In3luki) Add a button to attack rolls to manually draw a critical hit card
+* (@In3luki) Add item drop on tokens handler (0.7.x only)
+* (@KSops) Adding MAP to spell chat card
+* (@meditatingCybermind) Added fame and reputation tracking for pfs
+* (@nikolaj-a) Target flat-footed checkbox on actions tab
+* (@nikolaj-a) Add onAfterPrepareData hook on for rule elements
+* (@nikolaj-a) Add basic value bracketing option to rule elements
+* (@nikolaj-a) Add default label to rule elements
+* (@nikolaj-a) Dexterity modifier cap rule element
+* (@nikolaj-a) Add Guidance spell effect to compendium
+* (@nikolaj-a) Mage armor spell effect
+
+### Bug Fixes
+* (@In3luki) Remove redundant image edit listener
+* (@lotrein) Fix for Diehard correctly increasing both wounded and doomed conditions as well as changing the max values when removed (#455)
+* (@lotrein) Fix Dangerous Sorcery feat adding damage to cantrips and focus spells (#734)
+
+### Content Changes
+* (@olilan) Update Treat Wounds macro for feats
+* (@overdox) Fix for treasure items that had broken image names
+* (@overdox) Spell icon updates
+* (@TMun) Added base damage to all acid flasks in the bonus damage field. Replaced acid flasks on Fumbus and Quinn with updated version
+* (@TMun) Corrects voidworm damage (#745)
+* (@TMun) Relinked character sheet iconics images
+* (@TMun) Add example spell effects for magic shield, guidance and add effects for panache and dueling parry
+
+### Core System Improvements
+* (@abrault) Find location for player settings for all versions
+* (@blacksmithgu) Add types to dice pools in weapon damage
+* (@mdizo) UX: Effects Tab - Basic Styles
+* (@mdizo) UX: Actions Tab Rework
+* (@nikolaj-a) Actions tab navigation
+* (@nikolaj-a) Non-encounter draft UI
+
+### Development Improvements
+* (@mdizo) Updated sourceMap config
+
+
 ## Version 1.10.8
 ### New Features
 * (@In3luki) Add system setting to automatically draw a crit or fumble card

@@ -406,6 +406,12 @@ class CRBStyleCharacterActorSheetPF2E extends ActorSheetPF2eCreature {
       this.actor.updateEmbeddedEntity('OwnedItem', embeddedEntityUpdate);
     }
 
+    // assign mode to actions
+    Object.values(actions).flatMap(section => section.actions).forEach((action: any) => {
+        action.downtime = action.data.traits.value.includes('downtime');
+        action.exploration = action.data.traits.value.includes('exploration');
+        action.encounter = !(action.downtime || action.exploration);
+    });
 
     // Assign and return
     actorData.inventory = inventory;
@@ -525,6 +531,18 @@ class CRBStyleCharacterActorSheetPF2E extends ActorSheetPF2eCreature {
       if (title) {
         parent.find('.navigation-title').text(title);
       }
+    });
+
+    // handle sub-tab navigation on the actions tab
+    html.find('.actions-nav').on('click', '.tab:not(.tab-active)', event => {
+        const target = $(event.currentTarget);
+        const nav = target.parents('.actions-nav');
+        // deselect current tab and panel
+        nav.children('.tab-active').removeClass('tab-active');
+        nav.siblings('.actions-panels').children('.actions-panel.active').removeClass('active')
+        // select new tab and panel
+        target.addClass('tab-active');
+        nav.siblings('.actions-panels').children(`#${target.data('panel')}`).addClass('active');
     });
 
     html.find('.crb-trait-selector').click((ev) => this._onCrbTraitSelector(ev));

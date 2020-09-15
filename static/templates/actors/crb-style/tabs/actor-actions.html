@@ -3,29 +3,24 @@
 
         <div class="actions-tabs-wrapper">
 
-            <input class="action-radio" id="en-pointer" type="radio" name="flags.pf2e.sheet.tab" value="{{flags.pf2e.sheet.tab}}" checked>
-            <input class=action-radio id="ex-pointer" type="radio" name="flags.pf2e.sheet.tab" value="{{flags.pf2e.sheet.tab}}" disabled>
-            <input class="action-radio" id="do-pointer" type="radio" name="flags.pf2e.sheet.tab" value="{{flags.pf2e.sheet.tab}}" disabled>
-            <div class="actions-nav">
-                <label class="tab" id="en-tab" for="en-pointer">Encounter</label>
-                <label class="tab" id="ex-tab" for="ex-pointer">Exploration</label>
-                <label class="tab" id="do-tab" for="do-pointer">Downtime</label>
-            </div>
+            <ol class="actions-nav">
+                <li class="tab tab-active" id="en-tab" data-panel="encounter">{{localize 'PF2E.TabActionsEncounterLabel'}}</li>
+                <li class="tab" id="ex-tab" data-panel="exploration">{{localize 'PF2E.TabActionsExplorationLabel'}}</li>
+                <li class="tab" id="do-tab"  data-panel="downtime">{{localize 'PF2E.TabActionsDowntimeLabel'}}</li>
+            </ol>
 
             <div class="actions-panels">
 
-                <div id="encounter" class="actions-panel">
+                <div id="encounter" class="actions-panel active">
                     <div class="actions-options">
-                        <div class="actions-option flat-footed">
-                            <input type="checkbox" id="flat-footed" name="flags.pf2e.rollOptions.all.target:flatFooted" {{checked isTargetFlatFooted}}>
-                            <label for="flat-footed">Flat-Footed</label>
+                        {{#each data.toggles.actions as |toggle idx|}}
+                        <div class="actions-option">
+                            <label>
+                                <input type="checkbox" name="{{toggle.inputName}}" {{checked toggle.checked}}>
+                                <span>{{localize toggle.label}}</span>
+                            </label>
                         </div>
-                        <!--
-                        <div class="actions-option clan-enemy">
-                            <input type="checkbox" id="clan-enemy" name="clan-enemy">
-                            <label for="clan-enemy">Clan Enemy</label>
-                        </div>
-                        -->
+                        {{/each}}
                     </div>
 
                     <ol class="actions-list inventory-list directory-list strikes-list">
@@ -73,12 +68,13 @@
                                 <h3 class="pf-heading pf-actions">{{section.label}}</h3>
                                 {{#if ../owner}}
                                 <div class="item-controls" style="display: flex">
-                                    <a class="item-control item-create" title="{{localize "PF2E.CreateActionTitle"}}" data-type="action" data-action-type="{{sid}}"><i class="fas fa-plus"></i></a>
-                                    <a class="item-control action-browse" title="{{localize "PF2E.OpenActionBrowserTitle"}}" data-type="feat"><i class="fas fa-search"></i></a>
+                                    <a class="item-control item-create" title="{{localize 'PF2E.CreateActionTitle'}}" data-type="action" data-action-type="{{sid}}"><i class="fas fa-plus"></i></a>
+                                    <a class="item-control action-browse" title="{{localize 'PF2E.OpenActionBrowserTitle'}}" data-type="feat"><i class="fas fa-search"></i></a>
                                 </div>
                                 {{/if}}
                             </li>
                             {{#each section.actions as |action aid|}}
+                            {{#if action.encounter}}
                             <li class="item" data-item-id="{{action._id}}">
                                 <div class="item-name rollable">
                                     <div class="item-image" style="background-image: url({{action.img}})">
@@ -90,24 +86,85 @@
                                 </div>
                                 {{#if ../../owner}}
                                 <div class="item-controls">
-                                    <a class="item-control item-edit" title="{{localize "PF2E.EditItemTitle"}}"><i class="fas fa-edit"></i></a>
+                                    <a class="item-control item-edit" title="{{localize 'PF2E.EditItemTitle'}}"><i class="fas fa-edit"></i></a>
                                     {{#unless action.feat}}
-                                    <a class="item-control item-delete" title="{{localize "PF2E.DeleteItemTitle"}}"><i class="fas fa-trash"></i></a>
+                                    <a class="item-control item-delete" title="{{localize 'PF2E.DeleteItemTitle'}}"><i class="fas fa-trash"></i></a>
                                     {{/unless}}
                                 </div>
                                 {{/if}}
                             </li>
+                            {{/if}}
                             {{/each}}
                         {{/each}}
                     </ol>
                 </div>
 
                 <div id="exploration" class="actions-panel">
-                    <h1>Exploration Page Test</h1>
+                    <ol class="actions-list inventory-list directory-list strikes-list">
+                        <li class="item action-header">
+                            <h3 class="pf-heading pf-actions">{{localize 'PF2E.ActionsActionsHeader'}}</h3>
+                            {{#if owner}}
+                            <div class="item-controls" style="display: flex">
+                                <a class="item-control item-create" title="{{localize 'PF2E.CreateActionTitle'}}" data-type="action" data-action-type="free"><i class="fas fa-plus"></i></a>
+                                <a class="item-control action-browse" title="{{localize 'PF2E.OpenActionBrowserTitle'}}" data-type="feat"><i class="fas fa-search"></i></a>
+                            </div>
+                            {{/if}}
+                        </li>
+                        {{#each actor.actions.free.actions as |action aid|}}
+                        {{#if action.exploration}}
+                        <li class="item" data-item-id="{{action._id}}">
+                            <div class="item-name rollable">
+                                <div class="item-image" style="background-image: url({{action.img}})">
+                                    <i class="fas fa-comment-alt"></i>
+                                </div>
+                                <h4>{{action.name}}</h4>
+                            </div>
+                            {{#if ../owner}}
+                            <div class="item-controls">
+                                <a class="item-control item-edit" title="{{localize 'PF2E.EditItemTitle'}}"><i class="fas fa-edit"></i></a>
+                                {{#unless action.feat}}
+                                <a class="item-control item-delete" title="{{localize 'PF2E.DeleteItemTitle'}}"><i class="fas fa-trash"></i></a>
+                                {{/unless}}
+                            </div>
+                            {{/if}}
+                        </li>
+                        {{/if}}
+                        {{/each}}
+                    </ol>
                 </div>
 
                 <div id="downtime" class="actions-panel">
-                    <h1>Downtime Page Test</h1>
+                    <ol class="actions-list inventory-list directory-list strikes-list">
+                        <li class="item action-header">
+                            <h3 class="pf-heading pf-actions">{{localize 'PF2E.ActionsActionsHeader'}}</h3>
+                            {{#if owner}}
+                            <div class="item-controls" style="display: flex">
+                                <a class="item-control item-create" title="{{localize 'PF2E.CreateActionTitle'}}" data-type="action" data-action-type="free"><i class="fas fa-plus"></i></a>
+                                <a class="item-control action-browse" title="{{localize 'PF2E.OpenActionBrowserTitle'}}" data-type="feat"><i class="fas fa-search"></i></a>
+                            </div>
+                            {{/if}}
+                        </li>
+                        {{#each actor.actions.free.actions as |action aid|}}
+                        {{#if action.downtime}}
+                        <li class="item" data-item-id="{{action._id}}">
+                            <div class="item-name rollable">
+                                <div class="item-image" style="background-image: url({{action.img}})">
+                                  <i class="fas fa-comment-alt"></i>
+                                </div>
+                                <h4>{{action.name}}</h4>
+                            </div>
+                            {{#if ../owner}}
+                            <div class="item-controls">
+                                <a class="item-control item-edit" title="{{localize 'PF2E.EditItemTitle'}}"><i class="fas fa-edit"></i></a>
+                                {{#unless action.feat}}
+                                <a class="item-control item-delete" title="{{localize 'PF2E.DeleteItemTitle'}}"><i class="fas fa-trash"></i></a>
+                                {{/unless}}
+                            </div>
+                            {{/if}}
+                        </li>
+                        {{/if}}
+                        {{/each}}
+                    </ol>
                 </div>
 
             </div>
@@ -115,7 +172,4 @@
         </div>
     </div>
 </div>
-
-
                <!-- ********** ACTIONS ************ -->
-
