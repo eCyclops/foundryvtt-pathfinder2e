@@ -142,8 +142,8 @@
         "rules": [
             {
                 "key": "PF2E.RuleElement.ToggleProperty",
-                "label": "Target can't see you",
-                "property": "flags.pf2e.rollOptions.damage-roll.target-cant-see-you"
+                "label": "Attacker is hidden, undetected, or unnoticed",
+                "property": "flags.pf2e.rollOptions.damage-roll.self:hidden"
             },
             {
                 "critical": true,
@@ -153,7 +153,7 @@
                 "key": "PF2E.RuleElement.DamageDice",
                 "predicate": {
                     "all": [
-                        "target-cant-see-you"
+                        "self:hidden"
                     ]
                 },
                 "selector": "{item|_id}-damage"
