@@ -152,9 +152,7 @@
                 "dieSize": "d6",
                 "key": "PF2E.RuleElement.DamageDice",
                 "predicate": {
-                    "all": [
-                        "self:hidden"
-                    ]
+                  "any": ["self:hidden", "self:undetected", "self:unnoticed"]
                 },
                 "selector": "{item|_id}-damage"
             }
