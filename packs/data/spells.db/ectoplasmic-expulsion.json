@@ -5,6 +5,7 @@
             "value": ""
         },
         "area": {
+            "areaType": "",
             "value": ""
         },
         "areasize": {
@@ -98,7 +99,7 @@
     },
     "effects": [],
     "flags": {},
-    "img": "systems/pf2e/icons/default-icons/spell.svg",
+    "img": "systems/pf2e/icons/spells/ectoplasmic-expulsion.webp",
     "name": "Ectoplasmic Expulsion",
     "permission": {
         "default": 0
