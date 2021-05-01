@@ -798,6 +798,9 @@
                 "areasize": {
                     "value": "5-foot emanation"
                 },
+                "category": {
+                    "value": "spell"
+                },
                 "components": {
                     "value": "somatic, verbal"
                 },
@@ -862,12 +865,6 @@
                 "source": {
                     "value": "https://2e.aonprd.com/Spells.aspx?ID=18"
                 },
-                "spellCategorie": {
-                    "value": "spell"
-                },
-                "spellCategory": {
-                    "value": ""
-                },
                 "spellType": {
                     "value": "save"
                 },
@@ -919,6 +916,9 @@
                 },
                 "areasize": {
                     "value": ""
+                },
+                "category": {
+                    "value": "spell"
                 },
                 "components": {
                     "value": "somatic, verbal"
@@ -984,12 +984,6 @@
                 "source": {
                     "value": "https://2e.aonprd.com/Spells.aspx?ID=110"
                 },
-                "spellCategorie": {
-                    "value": "spell"
-                },
-                "spellCategory": {
-                    "value": ""
-                },
                 "spellType": {
                     "value": "save"
                 },
@@ -1046,6 +1040,9 @@
                 "areasize": {
                     "value": "varies"
                 },
+                "category": {
+                    "value": "spell"
+                },
                 "components": {
                     "value": "varies"
                 },
@@ -1109,12 +1106,6 @@
                 "slug": null,
                 "source": {
                     "value": "https://2e.aonprd.com/Spells.aspx?ID=146"
-                },
-                "spellCategorie": {
-                    "value": "spell"
-                },
-                "spellCategory": {
-                    "value": ""
                 },
                 "spellType": {
                     "value": "save"
@@ -1167,6 +1158,9 @@
                 "areasize": {
                     "value": "varies"
                 },
+                "category": {
+                    "value": "spell"
+                },
                 "components": {
                     "value": "varies"
                 },
@@ -1230,12 +1224,6 @@
                 "slug": null,
                 "source": {
                     "value": "https://2e.aonprd.com/Spells.aspx?ID=146"
-                },
-                "spellCategorie": {
-                    "value": "spell"
-                },
-                "spellCategory": {
-                    "value": ""
                 },
                 "spellType": {
                     "value": "save"
@@ -1288,6 +1276,9 @@
                 "areasize": {
                     "value": "varies"
                 },
+                "category": {
+                    "value": "spell"
+                },
                 "components": {
                     "value": "varies"
                 },
@@ -1352,12 +1343,6 @@
                 "source": {
                     "value": "https://2e.aonprd.com/Spells.aspx?ID=146"
                 },
-                "spellCategorie": {
-                    "value": "spell"
-                },
-                "spellCategory": {
-                    "value": ""
-                },
                 "spellType": {
                     "value": "save"
                 },
@@ -1405,6 +1390,9 @@
                 "area": {
                     "value": ""
                 },
+                "category": {
+                    "value": "spell"
+                },
                 "components": {
                     "value": ""
                 },
@@ -1446,7 +1434,8 @@
                 },
                 "rules": [],
                 "save": {
-                    "basic": ""
+                    "basic": "",
+                    "value": ""
                 },
                 "scaling": {
                     "formula": "",
@@ -1457,9 +1446,6 @@
                 },
                 "slug": null,
                 "source": {
-                    "value": ""
-                },
-                "spellCategory": {
                     "value": ""
                 },
                 "spellType": {
@@ -1507,6 +1493,9 @@
                 },
                 "areasize": {
                     "value": ""
+                },
+                "category": {
+                    "value": "spell"
                 },
                 "components": {
                     "value": "somatic, verbal"
@@ -1572,12 +1561,6 @@
                 "source": {
                     "value": "https://2e.aonprd.com/Spells.aspx?ID=244"
                 },
-                "spellCategorie": {
-                    "value": "spell"
-                },
-                "spellCategory": {
-                    "value": ""
-                },
                 "spellType": {
                     "value": "attack"
                 },
@@ -1627,6 +1610,9 @@
                 "area": {
                     "value": ""
                 },
+                "category": {
+                    "value": "spell"
+                },
                 "components": {
                     "value": ""
                 },
@@ -1668,7 +1654,8 @@
                 },
                 "rules": [],
                 "save": {
-                    "basic": ""
+                    "basic": "",
+                    "value": ""
                 },
                 "scaling": {
                     "formula": "",
@@ -1679,9 +1666,6 @@
                 },
                 "slug": null,
                 "source": {
-                    "value": ""
-                },
-                "spellCategory": {
                     "value": ""
                 },
                 "spellType": {
@@ -1729,6 +1713,9 @@
                 },
                 "areasize": {
                     "value": ""
+                },
+                "category": {
+                    "value": "spell"
                 },
                 "components": {
                     "value": "somatic, verbal"
@@ -1794,12 +1781,6 @@
                 "source": {
                     "value": "https://2e.aonprd.com/Spells.aspx?ID=35"
                 },
-                "spellCategorie": {
-                    "value": "spell"
-                },
-                "spellCategory": {
-                    "value": ""
-                },
                 "spellType": {
                     "value": "save"
                 },
@@ -1858,6 +1839,9 @@
                 },
                 "areasize": {
                     "value": ""
+                },
+                "category": {
+                    "value": "spell"
                 },
                 "components": {
                     "value": "somatic, verbal"
@@ -1923,12 +1907,6 @@
                 "source": {
                     "value": "https://2e.aonprd.com/Spells.aspx?ID=61"
                 },
-                "spellCategorie": {
-                    "value": "spell"
-                },
-                "spellCategory": {
-                    "value": ""
-                },
                 "spellType": {
                     "value": "save"
                 },
@@ -1989,6 +1967,9 @@
                 },
                 "areasize": {
                     "value": ""
+                },
+                "category": {
+                    "value": "spell"
                 },
                 "components": {
                     "value": "somatic, verbal"
@@ -2054,12 +2035,6 @@
                 "source": {
                     "value": "https://2e.aonprd.com/Spells.aspx?ID=84"
                 },
-                "spellCategorie": {
-                    "value": "spell"
-                },
-                "spellCategory": {
-                    "value": ""
-                },
                 "spellType": {
                     "value": "attack"
                 },
@@ -2112,6 +2087,9 @@
                 },
                 "areasize": {
                     "value": ""
+                },
+                "category": {
+                    "value": "spell"
                 },
                 "components": {
                     "value": "verbal"
@@ -2177,12 +2155,6 @@
                 "source": {
                     "value": ""
                 },
-                "spellCategorie": {
-                    "value": "spell"
-                },
-                "spellCategory": {
-                    "value": ""
-                },
                 "spellType": {
                     "value": "utility"
                 },
@@ -2240,6 +2212,9 @@
                 },
                 "areasize": {
                     "value": ""
+                },
+                "category": {
+                    "value": "spell"
                 },
                 "components": {
                     "value": "somatic, verbal"
@@ -2303,12 +2278,6 @@
                 },
                 "slug": null,
                 "source": {
-                    "value": ""
-                },
-                "spellCategorie": {
-                    "value": "spell"
-                },
-                "spellCategory": {
                     "value": ""
                 },
                 "spellType": {

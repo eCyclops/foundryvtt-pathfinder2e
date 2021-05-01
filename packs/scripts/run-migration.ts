@@ -14,6 +14,8 @@ import { Migration620RenameToWebp } from '@module/migrations/620-rename-to-webp'
 import { Migration621RemoveConfigSpellSchools } from '@module/migrations/621-remove-config-spellSchools';
 import { Migration623NumifyPotencyRunes } from '@module/migrations/623-numify-potency-runes';
 import { Migration625EnsurePresenceOfSaves } from '@module/migrations/625-ensure-presence-of-saves';
+import { Migration626UpdateSpellCategory } from '@module/migrations/626-update-spell-category';
+import { Migration627LowerCaseSpellSaves } from '@module/migrations/627-lowercase-spell-saves';
 
 const migrations: MigrationBase[] = [
     new Migration615RemoveInstinctTrait(),
@@ -23,6 +25,8 @@ const migrations: MigrationBase[] = [
     new Migration621RemoveConfigSpellSchools(),
     new Migration623NumifyPotencyRunes(),
     new Migration625EnsurePresenceOfSaves(),
+    new Migration626UpdateSpellCategory(),
+    new Migration627LowerCaseSpellSaves(),
 ];
 
 const packsDataPath = path.resolve(process.cwd(), 'packs/data');

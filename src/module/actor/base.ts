@@ -3,7 +3,7 @@ import { ConditionManager } from '../conditions';
 import { isCycle } from '@item/container';
 import { DicePF2e } from '@scripts/dice';
 import { ItemPF2e } from '@item/base';
-import { ItemDataPF2e, ConditionData, ArmorData, WeaponData, isMagicDetailsData } from '@item/data-definitions';
+import { ItemDataPF2e, ConditionData, WeaponData, isMagicDetailsData } from '@item/data-definitions';
 import {
     ActorDataPF2e,
     HazardData,
@@ -30,7 +30,6 @@ import { ArmorPF2e } from '@item/armor';
 import { LocalizePF2e } from '@module/system/localize';
 import { ItemTransfer } from './item-transfer';
 import { ConditionPF2e } from '@item/others';
-import { AutomaticBonusProgression } from '../rules/automatic-bonus';
 import { TokenEffect } from '@module/rules/rule-element';
 
 export const SKILL_DICTIONARY = Object.freeze({
@@ -218,7 +217,8 @@ export class ActorPF2e extends Actor<ItemPF2e, ActiveEffectPF2e> {
                         merged.token.vision = true;
                         break;
                     case 'loot':
-                        // Make loot actors interactable and neutral disposition
+                        // Make loot actors linked, interactable and neutral disposition
+                        merged.token.actorLink = true;
                         merged.permission.default = CONST.ENTITY_PERMISSIONS.LIMITED;
                         merged.token.disposition = CONST.TOKEN_DISPOSITIONS.NEUTRAL;
                         break;
@@ -281,24 +281,6 @@ export class ActorPF2e extends Actor<ItemPF2e, ActiveEffectPF2e> {
             );
         }
     }
-
-    /** Obtain the first equipped armor the character has. */
-    getFirstWornArmor(): ArmorData | undefined {
-        return this.data.items
-            .filter((item): item is ArmorData => item.type === 'armor')
-            .filter((armor) => armor.data.armorType.value !== 'shield')
-            .find((armor) => armor.data.equipped.value);
-    }
-
-    /** Obtain the first equipped shield the character has. */
-    getFirstEquippedShield(): ArmorData | undefined {
-        return this.data.items
-            .filter((item): item is ArmorData => item.type === 'armor')
-            .filter((armor) => armor.data.armorType.value === 'shield')
-            .find((shield) => shield.data.equipped.value);
-    }
-
-    /* -------------------------------------------- */
 
     onCreateOwnedItem(child: ItemDataPF2e, _options: EntityCreateOptions, _userId: string) {
         if (!(isCreatureData(this.data) && this.can(game.user, 'update'))) return;
@@ -393,7 +375,6 @@ export class ActorPF2e extends Actor<ItemPF2e, ActiveEffectPF2e> {
             striking,
             multipleAttackPenalties,
         };
-        AutomaticBonusProgression.concatModifiers(actorData.data.details.level.value, synthetics);
         rules.forEach((rule) => {
             try {
                 rule.onBeforePrepareData(actorData, synthetics);

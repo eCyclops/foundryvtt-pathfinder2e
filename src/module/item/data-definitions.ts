@@ -541,10 +541,10 @@ export interface SpellDetailsData extends ItemDescriptionData, ItemLevelData {
     spellType: {
         value: string;
     };
-    spellCategory: {
-        value: string;
+    category: {
+        value: keyof ConfigPF2e['PF2E']['spellCategories'];
     };
-    traditions: ValuesList<MagicTraditionKey>;
+    traditions: ValuesList<keyof ConfigPF2e['PF2E']['spellTraditions']>;
     school: {
         value: MagicSchoolKey;
     };
@@ -814,6 +814,7 @@ export type ItemType =
     | 'spell'
     | 'spellcastingEntry'
     | PhysicalItemType;
+export type InventoryItemType = Exclude<PhysicalItemType, 'melee'>;
 
 export interface BaseItemDataPF2e<D extends ItemDescriptionData> extends ItemData {
     type: ItemType;
@@ -926,6 +927,10 @@ export type ItemDataPF2e =
     | BackgroundData
     | ClassData
     | EffectData;
+
+export function isItemSystemData(data: Record<string, any>): data is ItemDescriptionData {
+    return data['description'] instanceof Object && typeof data['description']['value'] === 'string';
+}
 
 /** Checks if the given item data is a physical item with a quantity and other physical fields. */
 export function isPhysicalItem(itemData: ItemDataPF2e): itemData is PhysicalItemData {

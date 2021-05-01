@@ -256,7 +256,7 @@ export class NPCPF2e extends CreaturePF2e {
 
         // Shield
         {
-            const shield = this.getFirstEquippedShield();
+            const shield = this.heldShield?.data;
             if (shield) {
                 // Use shield item data
                 const isBroken = shield.data.hp.value <= shield.data.brokenThreshold.value;
@@ -577,9 +577,18 @@ export class NPCPF2e extends CreaturePF2e {
                 }
                 // Add attack effects to traits.
                 const attackTraits = item.data.attackEffects.value.map((attackEffect: string) => {
+                    const localizationMap: Record<string, string> = CONFIG.PF2E.attackEffects;
+                    const key = sluggify(attackEffect);
+                    const actions = this.itemTypes.action;
+                    const label =
+                        game.i18n.localize(localizationMap[key]) ??
+                        actions.flatMap((action) =>
+                            action.slug === key || sluggify(action.name) === key ? action.name : [],
+                        )[0] ??
+                        attackEffect;
                     return {
-                        name: attackEffect.toLowerCase(),
-                        label: game.i18n.localize(attackEffect),
+                        name: key,
+                        label,
                         toggle: false,
                     };
                 });

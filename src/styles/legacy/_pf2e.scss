@@ -1936,7 +1936,7 @@
     .inventory-list .item {
       display: flex;
       flex-direction: row;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       justify-content: flex-start;
       line-height: 1.8em;
       padding: 0;
@@ -1958,7 +1958,7 @@
         &:first-child {
             padding-left: 4px;
             &.long {
-              min-width: 50%;
+              min-width: 245px;
             }
         }
       }
@@ -1974,7 +1974,7 @@
 
       .item-name .item-image, .melee-name .item-image {
         flex: 0 0 24px;
-        margin-right: 6px;
+        margin-right: 4px;
         background-size: 24px;
         background-repeat: no-repeat;
       }
@@ -2540,13 +2540,17 @@
     }
 
     .form-group {
-      height: 24px;
-      margin: 2px 0;
+        height: 24px;
+        margin: 2px 0;
 
-      &.scalable {
-        height: auto;
-        min-height: 24px;
-      }
+        &.scalable {
+            height: auto;
+            min-height: 24px;
+
+            ul.traits-list {
+                list-style-type: none;
+            }
+        }
     }
 
     .sheet-body {

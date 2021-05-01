@@ -34,7 +34,7 @@ export class ArmorPF2e extends PhysicalItemPF2e {
     }
 
     get acBonus(): number {
-        const potencyRune = Number(this.data.data.potencyRune?.value) || 0;
+        const potencyRune = this.data.data.potencyRune.value;
         const baseArmor = Number(this.data.data.armor.value) || 0;
         return this.isShield && this.isBroken ? 0 : baseArmor + potencyRune;
     }
@@ -64,18 +64,18 @@ export class ArmorPF2e extends PhysicalItemPF2e {
 
         // Add traits from potency rune
         const traditionTraits = ['arcane', 'primal', 'divine', 'occult'];
-        const potencyRune = this.data.data.potencyRune;
+        const hasPotencyRune = !!this.data.data.potencyRune.value;
         const traits = this.data.data.traits;
         traits.value = [
             ...traits.value,
-            potencyRune.value ? ['invested', 'abjuration'] : [],
-            !traditionTraits.some((trait) => traits.value.includes(trait)) ? 'magical' : [],
+            hasPotencyRune ? ['invested', 'abjuration'] : [],
+            hasPotencyRune && !traditionTraits.some((trait) => traits.value.includes(trait)) ? 'magical' : [],
         ].flat();
 
         traits.value = Array.from(new Set(traits.value));
     }
 
-    getChatData(htmlOptions?: Record<string, boolean>) {
+    getChatData(this: Owned<ArmorPF2e>, htmlOptions: EnrichHTMLOptions = {}) {
         const data = this.data.data;
         const localize = game.i18n.localize.bind(game.i18n);
         const properties = [
