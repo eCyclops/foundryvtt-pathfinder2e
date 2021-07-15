@@ -11,7 +11,7 @@
             "value": ""
         },
         "description": {
-            "value": "<p>You descend from azarketis who migrated to land environments that could support their need for water. Over time, your people adapted to life on land culturally and physically, even resulting in azarketis born with human hair like their Azlanti ancestors. You no longer need to be immersed in water every 24 hours to maintain your skin and can instead mist or wipe your skin with water to live comfortably. Your land Speed is 25 feet, but your swim Speed is only 15 feet.</p>"
+            "value": "<p>You descend from azarketis who migrated to land environments that could support their need for water. Over time, your people adapted to life on land culturally and physically, even resulting in azarketis born with human hair like their Azlanti ancestors.</p>\n<p>You no longer need to be immersed in water every 24 hours to maintain your skin and can instead mist or wipe your skin with water to live comfortably.</p>\n<p>Your land Speed is 25 feet, but your swim Speed is only 15 feet.</p>\n<hr />\n<p><em>Note: To get the correect swim speed, you need to replace the @Compendium[pf2e.ancestryfeatures.Swim]{Swim} ancestry feature granted to non-Mistbreath Azarketi with @Compendium[pf2e.ancestryfeatures.Swim (Mistbreath Azarketi)]{Swim (Mistbreath Azarketi)}.</em></p>"
         },
         "featType": {
             "value": "heritage"
@@ -23,9 +23,22 @@
         "prerequisites": {
             "value": []
         },
-        "rules": [],
+        "rules": [
+            {
+                "key": "PF2E.RuleElement.FlatModifier",
+                "selector": "land-speed",
+                "value": 5
+            }
+        ],
         "schema": {
-            "lastMigration": null,
+            "lastMigration": {
+                "datetime": "2021-07-13T16:05:15.796+01:00",
+                "version": {
+                    "foundry": "0.8.8",
+                    "schema": null,
+                    "system": "2.9.1"
+                }
+            },
             "version": 0.643
         },
         "source": {
@@ -41,7 +54,28 @@
             ]
         }
     },
-    "effects": [],
+    "effects": [
+        {
+            "_id": "AC0tdsfc6l0HuLU9",
+            "changes": [
+                {
+                    "key": "data.attributes.speed.value",
+                    "mode": 5,
+                    "value": "25"
+                }
+            ],
+            "disabled": false,
+            "duration": {
+                "startTime": null
+            },
+            "flags": {},
+            "icon": "systems/pf2e/icons/default-icons/feat.svg",
+            "label": "Mistbreath Azarketi",
+            "origin": "",
+            "tint": null,
+            "transfer": true
+        }
+    ],
     "flags": {},
     "img": "systems/pf2e/icons/default-icons/feat.svg",
     "name": "Mistbreath Azarketi",

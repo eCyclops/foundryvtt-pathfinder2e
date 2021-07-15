@@ -1,5 +1,5 @@
 {
-    "_id": "Ymg6WqeJqOyLJLEr",
+    "_id": "6G8a4IB98PdXpgp5",
     "data": {
         "actionCategory": {
             "value": ""
@@ -11,7 +11,7 @@
             "value": ""
         },
         "description": {
-            "value": "<p>As a anadi, you gain the @Compendium[pf2e.actionspf2e.Change Shape (Anadi)]{Change Shape (Anadi)} ability.</p>"
+            "value": "<p>As a kitsune, you gain the @Compendium[pf2e.actionspf2e.Change Shape (Kitsune)]{Change Shape (Kitsune)} ability.</p>"
         },
         "featType": {
             "value": "ancestryfeature"
@@ -44,6 +44,6 @@
     "effects": [],
     "flags": {},
     "img": "systems/pf2e/icons/default-icons/feat.svg",
-    "name": "Change Shape",
+    "name": "Change Shape (Kitsune)",
     "type": "feat"
 }
